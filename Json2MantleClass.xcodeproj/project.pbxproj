@@ -1,0 +1,288 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD3BED621C60768200CF7375 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3BED611C60768200CF7375 /* AppDelegate.m */; };
+		AD3BED651C60768200CF7375 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3BED641C60768200CF7375 /* main.m */; };
+		AD3BED671C60768200CF7375 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD3BED661C60768200CF7375 /* Assets.xcassets */; };
+		AD3BED6A1C60768200CF7375 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD3BED681C60768200CF7375 /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AD3BED5D1C60768200CF7375 /* Json2MantleClass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Json2MantleClass.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD3BED601C60768200CF7375 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AD3BED611C60768200CF7375 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AD3BED641C60768200CF7375 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AD3BED661C60768200CF7375 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AD3BED691C60768200CF7375 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		AD3BED6B1C60768200CF7375 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD3BED5A1C60768200CF7375 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD3BED541C60768200CF7375 = {
+			isa = PBXGroup;
+			children = (
+				AD3BED5F1C60768200CF7375 /* Json2MantleClass */,
+				AD3BED5E1C60768200CF7375 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD3BED5E1C60768200CF7375 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD3BED5D1C60768200CF7375 /* Json2MantleClass.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD3BED5F1C60768200CF7375 /* Json2MantleClass */ = {
+			isa = PBXGroup;
+			children = (
+				AD3BED601C60768200CF7375 /* AppDelegate.h */,
+				AD3BED611C60768200CF7375 /* AppDelegate.m */,
+				AD3BED661C60768200CF7375 /* Assets.xcassets */,
+				AD3BED681C60768200CF7375 /* MainMenu.xib */,
+				AD3BED6B1C60768200CF7375 /* Info.plist */,
+				AD3BED631C60768200CF7375 /* Supporting Files */,
+			);
+			path = Json2MantleClass;
+			sourceTree = "<group>";
+		};
+		AD3BED631C60768200CF7375 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AD3BED641C60768200CF7375 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD3BED5C1C60768200CF7375 /* Json2MantleClass */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD3BED6E1C60768200CF7375 /* Build configuration list for PBXNativeTarget "Json2MantleClass" */;
+			buildPhases = (
+				AD3BED591C60768200CF7375 /* Sources */,
+				AD3BED5A1C60768200CF7375 /* Frameworks */,
+				AD3BED5B1C60768200CF7375 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Json2MantleClass;
+			productName = Json2MantleClass;
+			productReference = AD3BED5D1C60768200CF7375 /* Json2MantleClass.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD3BED551C60768200CF7375 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = mhk;
+				TargetAttributes = {
+					AD3BED5C1C60768200CF7375 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = AD3BED581C60768200CF7375 /* Build configuration list for PBXProject "Json2MantleClass" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AD3BED541C60768200CF7375;
+			productRefGroup = AD3BED5E1C60768200CF7375 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD3BED5C1C60768200CF7375 /* Json2MantleClass */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AD3BED5B1C60768200CF7375 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD3BED671C60768200CF7375 /* Assets.xcassets in Resources */,
+				AD3BED6A1C60768200CF7375 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD3BED591C60768200CF7375 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD3BED651C60768200CF7375 /* main.m in Sources */,
+				AD3BED621C60768200CF7375 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AD3BED681C60768200CF7375 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD3BED691C60768200CF7375 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AD3BED6C1C60768200CF7375 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AD3BED6D1C60768200CF7375 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AD3BED6F1C60768200CF7375 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Json2MantleClass/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mhk.ios.Json2MantleClass;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AD3BED701C60768200CF7375 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Json2MantleClass/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mhk.ios.Json2MantleClass;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD3BED581C60768200CF7375 /* Build configuration list for PBXProject "Json2MantleClass" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD3BED6C1C60768200CF7375 /* Debug */,
+				AD3BED6D1C60768200CF7375 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD3BED6E1C60768200CF7375 /* Build configuration list for PBXNativeTarget "Json2MantleClass" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD3BED6F1C60768200CF7375 /* Debug */,
+				AD3BED701C60768200CF7375 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD3BED551C60768200CF7375 /* Project object */;
+}
