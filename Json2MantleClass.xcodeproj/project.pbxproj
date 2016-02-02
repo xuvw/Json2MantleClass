@@ -11,6 +11,8 @@
 		AD3BED651C60768200CF7375 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3BED641C60768200CF7375 /* main.m */; };
 		AD3BED671C60768200CF7375 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD3BED661C60768200CF7375 /* Assets.xcassets */; };
 		AD3BED6A1C60768200CF7375 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD3BED681C60768200CF7375 /* MainMenu.xib */; };
+		AD462B131C607DD40099678F /* NSMantleClassCreater.m in Sources */ = {isa = PBXBuildFile; fileRef = AD462B101C607DD40099678F /* NSMantleClassCreater.m */; };
+		AD462B141C607DD40099678F /* NSString+TMSerialize.m in Sources */ = {isa = PBXBuildFile; fileRef = AD462B121C607DD40099678F /* NSString+TMSerialize.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,10 @@
 		AD3BED661C60768200CF7375 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD3BED691C60768200CF7375 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		AD3BED6B1C60768200CF7375 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD462B0F1C607DD40099678F /* NSMantleClassCreater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMantleClassCreater.h; sourceTree = "<group>"; };
+		AD462B101C607DD40099678F /* NSMantleClassCreater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMantleClassCreater.m; sourceTree = "<group>"; };
+		AD462B111C607DD40099678F /* NSString+TMSerialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TMSerialize.h"; sourceTree = "<group>"; };
+		AD462B121C607DD40099678F /* NSString+TMSerialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TMSerialize.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +59,10 @@
 		AD3BED5F1C60768200CF7375 /* Json2MantleClass */ = {
 			isa = PBXGroup;
 			children = (
+				AD462B0F1C607DD40099678F /* NSMantleClassCreater.h */,
+				AD462B101C607DD40099678F /* NSMantleClassCreater.m */,
+				AD462B111C607DD40099678F /* NSString+TMSerialize.h */,
+				AD462B121C607DD40099678F /* NSString+TMSerialize.m */,
 				AD3BED601C60768200CF7375 /* AppDelegate.h */,
 				AD3BED611C60768200CF7375 /* AppDelegate.m */,
 				AD3BED661C60768200CF7375 /* Assets.xcassets */,
@@ -98,7 +108,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0720;
-				ORGANIZATIONNAME = mhk;
+				ORGANIZATIONNAME = heke;
 				TargetAttributes = {
 					AD3BED5C1C60768200CF7375 = {
 						CreatedOnToolsVersion = 7.2;
@@ -141,6 +151,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD3BED651C60768200CF7375 /* main.m in Sources */,
+				AD462B141C607DD40099678F /* NSString+TMSerialize.m in Sources */,
+				AD462B131C607DD40099678F /* NSMantleClassCreater.m in Sources */,
 				AD3BED621C60768200CF7375 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,6 +293,7 @@
 				AD3BED701C60768200CF7375 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
