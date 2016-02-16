@@ -200,12 +200,12 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
     for (NSString *key in keys) {
         value = [jsonDic valueForKey:key];
         if ([value isKindOfClass:[NSArray class]]) {
-            value1 = [(NSArray *)value firstObject];
-            if ([value1 isKindOfClass:[NSDictionary class]]) {
-                [MFile appendString:[NSString stringWithFormat:kDictionaryValueTransformerFunc,key,[NSString stringWithFormat:@"%@_%@",className,key]]];
-            }else{
-                [MFile appendString:[NSString stringWithFormat:kArrayValueTransformerFunc,key,[NSString stringWithFormat:@"%@_%@",className,key]]];
-            }
+//            value1 = [(NSArray *)value firstObject];
+//            if ([value1 isKindOfClass:[NSDictionary class]]) {
+//                [MFile appendString:[NSString stringWithFormat:kDictionaryValueTransformerFunc,key,[NSString stringWithFormat:@"%@_%@",className,key]]];
+//            }else{
+            [MFile appendString:[NSString stringWithFormat:kArrayValueTransformerFunc,key,[NSString stringWithFormat:@"%@_%@",className,key]]];
+//            }
         }else if ([value isKindOfClass:[NSDictionary class]]){
             [MFile appendString:[NSString stringWithFormat:kDictionaryValueTransformerFunc,key,[NSString stringWithFormat:@"%@_%@",className,key]]];
         }else {
