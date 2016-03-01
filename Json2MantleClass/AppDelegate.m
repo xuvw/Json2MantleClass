@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "NSMantleClassCreater.h"
 
+#define SeperatorHLine @"\n===========================================================================\n"
+
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
@@ -27,7 +29,7 @@
     
     [self.bottomTextView.textStorage deleteCharactersInRange:NSMakeRange(0,self.bottomTextView.textStorage.string.length)];
     
-    NSLog(@"%@",self.topTextView.textStorage.string);
+//    NSLog(@"%@",self.topTextView.textStorage.string);
     NSString *rawJson = self.topTextView.textStorage.string;
     NSString *mainClass = self.textField.stringValue;
     
@@ -41,9 +43,10 @@
     }
     
     [self.bottomTextView.textStorage appendAttributedString:[[NSAttributedString alloc] initWithString:headerFile]];
+    [self.bottomTextView.textStorage appendAttributedString:[[NSAttributedString alloc] initWithString:SeperatorHLine]];
     [self.bottomTextView.textStorage appendAttributedString:[[NSAttributedString alloc] initWithString:mFile]];
     
-    NSLog(@"%@",self.textField.stringValue);
+//    NSLog(@"%@",self.textField.stringValue);
 }
 
 @end
