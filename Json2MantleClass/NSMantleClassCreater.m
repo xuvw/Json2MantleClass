@@ -11,6 +11,11 @@
 
 #define kDemoJson @"{\"errorCode\":0}"
 
+NSString *const kComment = @"\/\/\n\
+\/\/  Created by Json2MantleClass\n\
+\/\/  Copyright mhk. All rights reserved.\n\
+\/\/\n";
+
 NSString *const kMantleHeader = @"#import \"Mantle.h\"\n";
 NSString *const kCustomHeader = @"#import \"%@.h\"\n";
 
@@ -45,9 +50,13 @@ NSString *const kValueTransformerFuncBegin = @"+ (NSValueTransformer *)%@JSONTra
 NSString *const kFuncEnd = @"}\n";
 
 NSString *const kBaseValueTransformerFunc = @"+ (NSValueTransformer *)%@JSONTransformer {\n\
-    return [MTLValueTransformer transformerUsingForwardBlock:^id(id rawValue, BOOL *success, NSError *__autoreleasing *error) \n{\
-        return rawValue;\n\
-    }];\n\
+return [MTLValueTransformer transformerUsingForwardBlock:^id(id rawValue,\n\
+                                                             BOOL *success,\n\
+                                                             NSError *__autoreleasing *error)\n\
+        {\n\
+            NSLog(@\"在这里做类型容错处理\");\n\
+            return rawValue;\n\
+        }];\n\
 }\n";
 
 NSString *const kDictionaryValueTransformerFunc = @"+ (NSValueTransformer *)%@JSONTransformer {\n\
@@ -68,12 +77,6 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
 
 @implementation NSMantleClassCreater
 
-+ (void)doTest {
-    NSDictionary *resultDic = [NSMantleClassCreater createMantleClassFromJsonString:kDemoJson
-                                                                      mainClassName:@"TMPost"];
-//    NSLog(@"%@",resultDic);
-}
-
 + (NSDictionary *)createMantleClassFromJsonString:(NSString *)jsonString
                                     mainClassName:(NSString *)className {
     if (jsonString.length<1) {
@@ -81,7 +84,7 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
     }
     
     NSDictionary *dic = [jsonString tm_jsonDic];
-    if ([dic count]<1) {
+    if (!dic) {
         return nil;
     }
     
@@ -102,7 +105,11 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
     
     NSMutableString *headerFile = [NSMutableString string];
     NSMutableString *mFile      = [NSMutableString string];
+    
+    [headerFile appendString:kComment];[headerFile appendString:rn];[headerFile appendString:rn];
     [headerFile appendString:headerFileHeader];[headerFile appendString:rn];
+    
+    [mFile appendString:kComment];[mFile appendString:rn];[mFile appendString:rn];
     [mFile appendString:implementHeader];[mFile appendString:rn];
     
     NSMutableArray *headerFiles = [NSMutableArray array];
@@ -126,7 +133,7 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
 }
 
 + (void)createHeaderFileOfClass:(NSString *)className of:(NSDictionary *)jsonDic storeIn:(NSMutableArray *)bags{
-    if ([jsonDic count]<1) {
+    if (!jsonDic) {
         return;
     }
     
@@ -161,7 +168,7 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
 }
 
 + (void)createMFileOfClass:(NSString *)className of:(NSDictionary *)jsonDic  storeIn:(NSMutableArray *)bags{
-    if ([jsonDic count]<1) {
+    if (!jsonDic) {
         return;
     }
     
@@ -197,6 +204,7 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
     [MFile appendString:initWithDictionaryFunc];
     id value = nil;
     id value1 = nil;
+    
     for (NSString *key in keys) {
         value = [jsonDic valueForKey:key];
         if ([value isKindOfClass:[NSArray class]]) {
@@ -206,7 +214,6 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
             
             [MFile appendString:[NSString stringWithFormat:kDictionaryValueTransformerFunc,key,[NSString stringWithFormat:@"%@_%@",className,key]]];
         }else {
-            
             [MFile appendString:[NSString stringWithFormat:kBaseValueTransformerFunc,key]];
         }
     }

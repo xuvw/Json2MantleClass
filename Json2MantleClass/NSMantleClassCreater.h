@@ -19,6 +19,4 @@
 + (NSDictionary *)createMantleClassFromJsonDictionary:(NSDictionary *)jsonDic
                                         mainClassName:(NSString *)className;
 
-+ (void)doTest;
-
 @end
