@@ -209,7 +209,17 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
         value = [jsonDic valueForKey:key];
         if ([value isKindOfClass:[NSArray class]]) {
             
-            [MFile appendString:[NSString stringWithFormat:kArrayValueTransformerFunc,key,[NSString stringWithFormat:@"%@_%@",className,key]]];
+            NSArray *array = (NSArray *)value;
+            if (array.count > 0) {
+                id item = array.firstObject;
+                if ([NSMantleClassCreater isBaseTypeOrString:item]) {
+                    [MFile appendString:[NSString stringWithFormat:kBaseValueTransformerFunc,key]];
+                }else {
+                    [MFile appendString:[NSString stringWithFormat:kArrayValueTransformerFunc,key,[NSString stringWithFormat:@"%@_%@",className,key]]];
+                }
+            }else {
+                [MFile appendString:[NSString stringWithFormat:kBaseValueTransformerFunc,key]];
+            }
         }else if ([value isKindOfClass:[NSDictionary class]]){
             
             [MFile appendString:[NSString stringWithFormat:kDictionaryValueTransformerFunc,key,[NSString stringWithFormat:@"%@_%@",className,key]]];
@@ -259,7 +269,18 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
             typeName = kType_String;
             format = kcopyFormat;
         }else if ([aValue isKindOfClass:[NSArray class]]){//数组
-            typeName = kType_NSArray;
+            NSArray *array = (NSArray *)aValue;
+            if (array.count > 0) {
+                id item = array.firstObject;
+                if ([NSMantleClassCreater isBaseTypeOrString:item]) {
+                    typeName = kType_NSArray;
+                }else {
+                    typeName = [NSString stringWithFormat:@"%@_%@",className,key];
+                }
+            }else {
+                typeName = kType_NSArray;
+            }
+            
             format = kstrongFormat;
         }else if ([aValue isKindOfClass:[NSDictionary class]]){//字典
             typeName = [NSString stringWithFormat:@"%@_%@",className,key];//kType_NSDictionary;
@@ -270,6 +291,18 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
         }
     }
     return [NSString stringWithFormat:format,typeName,varName];
+}
+
++ (BOOL)isBaseTypeOrString:(id)value {
+    if ([value respondsToSelector:@selector(objCType)]) {
+        return YES;
+    }else {
+        if ([value isKindOfClass:[NSString class]]) {
+            return YES;
+        }else {
+            return NO;
+        }
+    }
 }
 
 @end
