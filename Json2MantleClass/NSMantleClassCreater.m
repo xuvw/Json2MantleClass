@@ -56,7 +56,7 @@ return [MTLValueTransformer transformerUsingForwardBlock:^id(id rawValue,\n\
         {\n\
             NSLog(@\"在这里做类型容错处理\");\n\
             return rawValue;\n\
-        }];\n\
+        };\n\
 }\n";
 
 NSString *const kDictionaryValueTransformerFunc = @"+ (NSValueTransformer *)%@JSONTransformer {\n\
