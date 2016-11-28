@@ -275,7 +275,7 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
                 if ([NSMantleClassCreater isBaseTypeOrString:item]) {
                     typeName = kType_NSArray;
                 }else {
-                    typeName = [NSString stringWithFormat:@"%@_%@",className,key];
+                    typeName = kType_NSArray;
                 }
             }else {
                 typeName = kType_NSArray;
