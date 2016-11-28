@@ -54,7 +54,7 @@ return [MTLValueTransformer transformerUsingForwardBlock:^id(id rawValue,\n\
                                                              BOOL *success,\n\
                                                              NSError *__autoreleasing *error)\n\
         {\n\
-            NSLog(@\"在这里做类型容错处理\");\n\
+            //NSLog(@\"在这里做类型容错处理\");\n\
             return rawValue;\n\
         }];\n\
 }\n";
