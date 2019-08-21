@@ -8,6 +8,8 @@
 
 #import "NSMantleClassCreater.h"
 #import "NSString+TMSerialize.h"
+#import "MXCode.h"
+#import "MXLine.h"
 
 #define kDemoJson @"{\"errorCode\":0}"
 
@@ -75,7 +77,23 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
     return self;\n\
 }\n";
 
+@interface NSMantleClassCreater ()
+
+@property (nonatomic, strong) MXCode *hCode;
+@property (nonatomic, strong) MXCode *mCode;
+
+@end
+
 @implementation NSMantleClassCreater
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 + (NSDictionary *)createMantleClassFromJsonString:(NSString *)jsonString
                                     mainClassName:(NSString *)className {
@@ -88,13 +106,23 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
         return nil;
     }
     
-    NSDictionary *resultDic = [NSMantleClassCreater createMantleClassFromJsonDictionary:dic
-                                                                          mainClassName:className];
+    NSDictionary *resultDic = [[[NSMantleClassCreater alloc] init] modelCodeFrom:dic className:className];
+    
+//    [NSMantleClassCreater createMantleClassFromJsonDictionary:dic
+//                                                                          mainClassName:className];
+    
     return resultDic;
 }
 
 /*
  头文件统一生成，每个单独的类实现中不用包括头文件
+ 
+ model代码生成步骤：
+ 1 生成基本属性代码
+ {属性映射表}
+ 2 生成模型属性OR数组属性
+ 3 闭合当前模型
+ 4 是否有字典属性 OR 数组属性
  */
 + (NSDictionary *)createMantleClassFromJsonDictionary:(NSDictionary *)jsonDic
                                         mainClassName:(NSString *)className {
@@ -130,6 +158,317 @@ NSString *const initWithDictionaryFunc = @"- (instancetype)initWithDictionary:(N
     
     return @{kMantle_h_File:headerFile,
              kMantle_m_File:mFile};
+}
+
+- (NSDictionary *)modelCodeFrom:(NSDictionary *)json
+                      className:(NSString *)className {
+    
+    if (!json || json.count < 1) {
+        return nil;
+    }
+    
+    _hCode = [[MXCode alloc] init];
+    _mCode = [[MXCode alloc] init];
+    
+    NSString *clsName = className;
+    
+    NSString *importHeader = [NSString stringWithFormat:@"#import \"%@.h\"", clsName];
+    
+    //create head
+    [_hCode addLine:line__(@"#import <Mantle/Mantle.h>", 0)];
+    [_hCode addLine:line__(@"", 0)];
+    
+    [_mCode addLine:line__(importHeader, 0)];
+    [_mCode addLine:line__(@"", 0)];
+    
+    //create body
+    [self createModelCodeFrom:json className:clsName];
+    
+    return @{kMantle_h_File:[_hCode codeString],
+             kMantle_m_File:[_mCode codeString]};
+}
+
+- (void)createModelCodeFrom:(NSDictionary *)json
+                  className:(NSString *)className {
+    if (!json) {
+        return;
+    }
+    
+    if (json.count < 1) {
+        NSLog(@"catch.....");
+    }
+    
+    NSString *clsName = className;
+    
+    
+    NSMutableDictionary *keyMap = @{}.mutableCopy;
+    NSMutableDictionary *keyClassMap = @{}.mutableCopy;
+    NSMutableDictionary *objJson = @{}.mutableCopy;
+    
+    NSArray *allKeys = [json allKeys];
+    for (NSString *key in allKeys) {
+        
+        NSString *typeName = [self classNameOfValue:json[key]
+                                                key:key
+                                          className:className];
+        
+        NSDictionary *jsonObj = [self jsonObject:json[key]];
+        if (jsonObj) {
+            [objJson setObject:jsonObj forKey:typeName];
+        }
+    }
+    
+    allKeys = [objJson allKeys];
+    allKeys = [self sortASC:allKeys];
+    for (NSString *key in allKeys) {
+        [self createModelCodeFrom:objJson[key] className:key];
+    }
+    
+    //.h
+    NSString *begin = [NSString stringWithFormat:@"@interface %@ : MTLModel<MTLJSONSerializing>",
+                       clsName];
+    [_hCode addLine:line__(begin, 0)];
+    allKeys = [json allKeys];
+    [keyMap removeAllObjects];
+    allKeys = [self sortASC:allKeys];
+    for (NSString *key in allKeys) {
+        
+        [keyMap setObject:[self checkKey:key] forKey:key];
+        
+        NSString *typeName = [self classNameOfValue:json[key]
+                                                key:key
+                                          className:className];
+        
+        [_hCode addLine:line__([self propertyOf:typeName value:json[key] propertyName:keyMap[key]], 0)];
+        
+        NSDictionary *jsonObj = [self jsonObject:json[key]];
+        if (jsonObj.count > 0) {
+            [objJson setObject:jsonObj forKey:typeName];
+        }
+        
+        [keyClassMap setObject:typeName forKey:key];
+    }
+    
+    NSString *end = @"@end";
+    [_hCode addLine:line__(end, 0)];
+    [_hCode addLine:line__(@"", 0)];
+    
+    //.m
+    begin = [NSString stringWithFormat:@"@implementation %@", clsName];
+    [_mCode addLine:line__(begin, 0)];
+    [_mCode addLine:line__(@"", 0)];
+    
+    //add keymaps
+    [_mCode addLine:line__(@"+ (NSDictionary *)JSONKeyPathsByPropertyKey {", 0)];
+    [_mCode addLine:line__(@"return @{", 1)];
+    
+    NSInteger count = allKeys.count;
+    NSString *keyNameMap = nil;
+    for (NSUInteger i = 0; i < count; ++i) {
+        if (i < count - 1) {
+            keyNameMap = [NSString stringWithFormat:@"@\"%@\":@\"%@\",",keyMap[allKeys[i]],allKeys[i]];
+        }else {
+            keyNameMap = [NSString stringWithFormat:@"@\"%@\":@\"%@\"",keyMap[allKeys[i]],allKeys[i]];
+        }
+        [_mCode addLine:line__(keyNameMap, 2)];
+    }
+    
+    [_mCode addLine:line__(@"};", 1)];
+    [_mCode addLine:line__(@"}", 0)];
+    
+    //add init
+    [_mCode addLine:line__(@"- (instancetype)initWithDictionary:(NSDictionary *)dictionaryValue error:(NSError *__autoreleasing *)error {", 0)];
+    [_mCode addLine:line__(@"self = [super initWithDictionary:dictionaryValue error:error];", 0)];
+    [_mCode addLine:line__(@"if (self) {", 1)];
+    [_mCode addLine:line__(@" ", 1)];
+    [_mCode addLine:line__(@"}", 1)];
+    [_mCode addLine:line__(@"return self;", 1)];
+    [_mCode addLine:line__(@"}", 0)];
+    
+    //add property transformer
+    
+    for (NSString *key in allKeys) {
+        [self addTransformer:_mCode type:keyClassMap[key] propertyName:keyMap[key] value:json[key]];
+    }
+    end = @"@end";
+    [_mCode addLine:line__(end, 0)];
+    [_mCode addLine:line__(@"", 0)];
+}
+
+- (NSArray<NSString *> *)sortASC:(NSArray *)keyArray {
+    return [keyArray sortedArrayUsingComparator:^NSComparisonResult(NSString *_Nonnull obj1, NSString *_Nonnull obj2) {
+        if (obj1.length < obj2.length) {
+            return NSOrderedAscending;
+        }
+        return NSOrderedDescending;
+    }];
+}
+
+- (NSArray<NSString *> *)sortDESC:(NSArray *)keyArray {
+    return [keyArray sortedArrayUsingComparator:^NSComparisonResult(NSString *_Nonnull obj1, NSString *_Nonnull obj2) {
+        if (obj1.length < obj2.length) {
+            return NSOrderedDescending;
+        }
+        return NSOrderedAscending;
+    }];
+}
+
+- (void)addTransformer:(MXCode *)code type:(NSString *)typeName propertyName:(NSString *)pName value:(NSObject *)value {
+    NSArray *typeSet = @[kType_CGFloat, kType_NSInteger, kType_BOOL, kType_String, kType_id];
+    
+    NSString *str = nil;
+    if ([typeSet containsObject:typeName] ||
+        ([typeName isEqualToString:kType_NSArray] && [self baseArray:value])) {//base type
+        
+        str = [NSString stringWithFormat:@"//Type:%@", typeName];
+        [code addLine:line__(str, 0)];
+        
+        str = [NSString stringWithFormat:@"+ (NSValueTransformer *)%@JSONTransformer {", pName];
+        [code addLine:line__(str, 0)];
+        
+        [code addLine:line__(@"    return [MTLValueTransformer transformerUsingForwardBlock:^id(id rawValue,BOOL *success, NSError *__autoreleasing *error){", 0)];
+        
+        [code addLine:line__(@"                return rawValue;", 0)];
+        
+        [code addLine:line__(@"    }];", 0)];
+        
+        [code addLine:line__(@"}", 0)];
+    }else {//json obj
+        if ([value isKindOfClass:[NSArray class]]) {
+            str = [NSString stringWithFormat:@"+ (NSValueTransformer *)%@JSONTransformer {", pName];
+            [code addLine:line__(str, 0)];
+            
+            str = [NSString stringWithFormat:@"return [MTLJSONAdapter arrayTransformerWithModelClass:%@.class];", typeName];
+            [code addLine:line__(str, 1)];
+            [code addLine:line__(@"}", 0)];
+        }else {
+            str = [NSString stringWithFormat:@"+ (NSValueTransformer *)%@JSONTransformer {", pName];
+            [code addLine:line__(str, 0)];
+            
+            str = [NSString stringWithFormat:@"return [MTLJSONAdapter dictionaryTransformerWithModelClass:%@.class];", typeName];
+            [code addLine:line__(str, 1)];
+            [code addLine:line__(@"}", 0)];
+        }
+    }
+    
+    [code addLine:line__(@" ", 0)];
+}
+
+- (BOOL)baseArray:(NSObject *)obj {
+    if (obj && [obj isKindOfClass:[NSArray class]]) {
+        NSArray *arr = (NSArray *)obj;
+        if (arr.count > 0) {
+            NSObject *item = arr.firstObject;
+            if ([item isKindOfClass:[NSDictionary class]]) {
+                return NO;
+            }else {
+                return YES;
+            }
+        }else {
+            return YES;
+        }
+    }else {
+        return YES;
+    }
+}
+
+- (NSDictionary *)jsonObject:(NSObject *)rawValue {
+    if (rawValue && [rawValue isKindOfClass:[NSDictionary class]]) {
+        return (NSDictionary *)rawValue;
+    }
+    
+    if (rawValue && [rawValue isKindOfClass:[NSArray class]]) {
+        NSArray *arr = (NSArray *)rawValue;
+        if (arr.count > 0) {
+            NSObject *obj = arr.firstObject;
+            if ([obj isKindOfClass:[NSDictionary class]]) {
+                return (NSDictionary *)obj;
+            }
+        }
+    }
+    return nil;
+}
+
+- (NSString *)propertyOf:(NSString *)className value:(NSObject *)value propertyName:(NSString *)name {
+    
+    NSString *formatString = nil;
+    if ([className isEqualToString:kType_NSInteger]) {
+        formatString = @"@property (nonatomic, assign) %@ %@;";
+    }else if ([className isEqualToString:kType_CGFloat]) {
+        formatString = @"@property (nonatomic, assign) %@ %@;";
+    }else if ([className isEqualToString:kType_String]) {
+        formatString = @"@property (nonatomic, copy) %@ *%@;";
+    }else if ([className isEqualToString:kType_BOOL]) {
+        formatString = @"@property (nonatomic, assign) %@ %@;";
+    }else if ([className isEqualToString:kType_NSArray]) {
+        if (value) {
+            NSArray *arr = (NSArray *)value;
+            if (arr.count > 0) {
+                NSObject *item = arr.firstObject;
+                if ([item isKindOfClass:[NSString class]]) {
+                    formatString = @"@property (nonatomic, strong) %@<NSString *> *%@;";
+                }else {
+                    formatString = @"@property (nonatomic, strong) %@ *%@;";
+                }
+            }else {
+                formatString = @"@property (nonatomic, strong) %@ *%@;";
+            }
+        }else {
+            formatString = @"@property (nonatomic, strong) %@ *%@;";
+        }
+        
+    }else if ([className isEqualToString:kType_id]) {
+        formatString = @"@property (nonatomic, strong) %@ %@;";
+    }else {
+        if ([value isKindOfClass:[NSArray class]]) {
+            formatString = @"@property (nonatomic, strong) NSArray<%@ *> *%@;";
+        }else {
+            formatString = @"@property (nonatomic, strong) %@ *%@;";
+        }
+    }
+    return [NSString stringWithFormat:formatString, className, name];
+}
+
+- (NSString *)checkKey:(NSString *)key {
+    NSArray *ocKeyWords = @[@"id",@"__VERSION__",@"default",@"description"];
+    NSString *keyNew = [key stringByReplacingOccurrencesOfString:@":" withString:@"_"];
+    if ([ocKeyWords containsObject:keyNew]) {
+        return [NSString stringWithFormat:@"%@_", keyNew];
+    }else {
+        return keyNew;
+    }
+}
+    
+- (NSString *)classNameOfValue:(id)aValue
+                           key:(NSString *)key
+                     className:(NSString *) className{
+    
+    NSString *typeName = @"";
+    if ([aValue respondsToSelector:@selector(objCType)]) {//标量 整形、浮点、bool
+        if (strcmp([aValue objCType], @encode(long long)) == 0) {//整形
+            typeName = kType_NSInteger;
+        }else if (strcmp([aValue objCType], @encode(double)) == 0) {//浮点
+            typeName = kType_CGFloat;
+        }else if (strcmp([aValue objCType], @encode(char)) == 0) {//bool
+            typeName = kType_BOOL;
+        }
+    }else{
+        if ([aValue isKindOfClass:[NSString class]]) {//字符串
+            typeName = kType_String;
+        }else if ([aValue isKindOfClass:[NSArray class]]){//数组
+            NSObject *obj = [(NSArray *)aValue firstObject];
+            if ([obj isKindOfClass:[NSDictionary class]]) {
+                typeName = [NSString stringWithFormat:@"%@_%@",className, key];
+            }else {
+                typeName = kType_NSArray;
+            }
+        }else if ([aValue isKindOfClass:[NSDictionary class]]){//字典
+            typeName = [NSString stringWithFormat:@"%@_%@",className, key];
+        }else{//未知类型
+            typeName = kType_id;
+        }
+    }
+    return typeName;
 }
 
 + (void)createHeaderFileOfClass:(NSString *)className of:(NSDictionary *)jsonDic storeIn:(NSMutableArray *)bags{

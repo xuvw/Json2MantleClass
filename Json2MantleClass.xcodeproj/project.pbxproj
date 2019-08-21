@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50CD3DFC230BA315002B1F76 /* MXCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3DFA230BA315002B1F76 /* MXCode.m */; };
+		50CD3DFD230BA315002B1F76 /* MXLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3DFB230BA315002B1F76 /* MXLine.m */; };
 		AD3BED621C60768200CF7375 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3BED611C60768200CF7375 /* AppDelegate.m */; };
 		AD3BED651C60768200CF7375 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3BED641C60768200CF7375 /* main.m */; };
 		AD3BED671C60768200CF7375 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD3BED661C60768200CF7375 /* Assets.xcassets */; };
@@ -16,6 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50CD3DF8230BA315002B1F76 /* MXLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLine.h; sourceTree = "<group>"; };
+		50CD3DF9230BA315002B1F76 /* MXCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXCode.h; sourceTree = "<group>"; };
+		50CD3DFA230BA315002B1F76 /* MXCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXCode.m; sourceTree = "<group>"; };
+		50CD3DFB230BA315002B1F76 /* MXLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLine.m; sourceTree = "<group>"; };
 		AD3BED5D1C60768200CF7375 /* Json2MantleClass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Json2MantleClass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD3BED601C60768200CF7375 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AD3BED611C60768200CF7375 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -59,6 +65,10 @@
 		AD3BED5F1C60768200CF7375 /* Json2MantleClass */ = {
 			isa = PBXGroup;
 			children = (
+				50CD3DF8230BA315002B1F76 /* MXLine.h */,
+				50CD3DFB230BA315002B1F76 /* MXLine.m */,
+				50CD3DF9230BA315002B1F76 /* MXCode.h */,
+				50CD3DFA230BA315002B1F76 /* MXCode.m */,
 				AD462B0F1C607DD40099678F /* NSMantleClassCreater.h */,
 				AD462B101C607DD40099678F /* NSMantleClassCreater.m */,
 				AD462B111C607DD40099678F /* NSString+TMSerialize.h */,
@@ -152,8 +162,10 @@
 			files = (
 				AD3BED651C60768200CF7375 /* main.m in Sources */,
 				AD462B141C607DD40099678F /* NSString+TMSerialize.m in Sources */,
+				50CD3DFD230BA315002B1F76 /* MXLine.m in Sources */,
 				AD462B131C607DD40099678F /* NSMantleClassCreater.m in Sources */,
 				AD3BED621C60768200CF7375 /* AppDelegate.m in Sources */,
+				50CD3DFC230BA315002B1F76 /* MXCode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
